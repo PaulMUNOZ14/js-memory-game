@@ -1,7 +1,12 @@
 const dimension = 150
 const imgStart = Math.floor(Math.random() * 100) + 1
-
 const images = []
+
+let firstCard = null
+let secondCard = null
+let lockBoard = false
+let moves = 0
+let matchedCount = 0
 
 for (let i = 0; i < 8; i++){
     const url = `https://picsum.photos/${dimension}?random=${imgStart + i}`;
@@ -19,6 +24,47 @@ function shuffle(array){
     }
 }
 
+function handleCardClick(card){
+    if (lockBoard || card === firstCard || card.classList.contains('matched')){
+        return
+    }
+
+    card.innerHTML = `<img src="${card.dataset.value}">`
+
+    if (firstCard === null){
+        firstCard = card
+        return
+    }
+
+    secondCard = card
+    lockBoard = true
+    moves++
+
+    checkMatch()
+}
+
+function checkMatch(){
+    if (firstCard.dataset.value === secondCard.dataset.value){
+        firstCard.classList.add('matched')
+        secondCard.classList.add('matched')
+
+        matchedCount += 2
+
+        firstCard = null
+        secondCard = null
+        lockBoard = false
+    } else {
+        setTimeout(() => {
+            firstCard.innerHTML = ''
+            secondCard.innerHTML = ''
+
+            firstCard = null
+            secondCard = null
+            lockBoard = false
+        }, 800)
+    }
+}
+
 function initGame(){
     shuffle(cards);
 
@@ -32,6 +78,8 @@ function initGame(){
 
         card.setAttribute('role', 'button')
         card.setAttribute('tabindex', '0')
+
+        card.addEventListener('click', () => handleCardClick(card));
 
         gameBoard.appendChild(card);
     })
