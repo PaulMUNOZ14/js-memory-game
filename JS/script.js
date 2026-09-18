@@ -1,12 +1,17 @@
 const dimension = 150
 const imgStart = Math.floor(Math.random() * 100) + 1
 const images = []
+const timerDisplay = document.getElementById('timerDisplay');
+const result = document.querySelector('#result');
+const restartButton = document.querySelector('#restart');
 
 let firstCard = null
 let secondCard = null
 let lockBoard = false
 let moves = 0
 let matchedCount = 0
+let seconds = 0
+let timerInterval = null
 
 for (let i = 0; i < 8; i++){
     const url = `https://picsum.photos/${dimension}?random=${imgStart + i}`;
@@ -53,6 +58,8 @@ function checkMatch(){
         firstCard = null
         secondCard = null
         lockBoard = false
+
+        checkVictory()
     } else {
         setTimeout(() => {
             firstCard.innerHTML = ''
@@ -65,10 +72,48 @@ function checkMatch(){
     }
 }
 
+function formatTime(sec){
+    const mm = String(Math.floor(sec / 60)).padStart(2, '0')
+    const ss = String(sec % 60).padStart(2, '0')
+
+    return `${mm}:${ss}`
+}
+
+function startTimer(){
+    timerInterval = setInterval(() => {
+        seconds++;
+        timerDisplay.textContent = formatTime(seconds)
+    }, 1000)
+}
+
+function checkVictory(){
+    if (matchedCount === cards.length){
+        clearInterval(timerInterval)
+
+        result.textContent = `Bravo ! Vous avez trouvé toutes les paires en ${formatTime(seconds)} avec ${moves} coups`
+
+        restartButton.style.display = 'block'
+    }
+}
+
 function initGame(){
     shuffle(cards);
 
+    let firstCard = null
+    let secondCard = null
+    let lockBoard = false
+    let moves = 0
+    let matchedCount = 0
+    let seconds = 0
+    let timerInterval = null
+
+    clearInterval(timerInterval)
+
     const gameBoard = document.querySelector('#game-board');
+
+    timerDisplay.textContent = '00:00'
+    gameBoard.innerHTML = ''
+    result.textContent = ''
 
     cards.forEach(imgUrl => {
         const card = document.createElement('div');
@@ -83,6 +128,10 @@ function initGame(){
 
         gameBoard.appendChild(card);
     })
+
+    startTimer()
 }
+
+restartButton.addEventListener('click', initGame)
 
 initGame()
