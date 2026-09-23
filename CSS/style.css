@@ -5,11 +5,11 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #00b7ff8c;
+    background-color: #0d45a1;
 }
 
 #game-container {
-    background-color: #00b7ff;
+    background-color: #1565c0;
     padding: 30px;
     border-radius: 20px;
     text-align: center;
@@ -27,7 +27,7 @@ h1 {
     margin-bottom: 20px;
     font-size: 1.2rem;
     font-weight: bold;
-    background-color: #008cff;
+    background-color: #0d45a1;
     padding: 10px;
     border-radius: 10px;
 }
@@ -36,6 +36,8 @@ h1 {
     display: grid;
     grid-template-columns: repeat(4, min(15vw, 15vh));
     gap: min(1vw, 1vh);
+
+    min-height: calc(4 * min(15vw, 15vh) + 3 * min(1vw, 1vh));
 }
 
 .card {
@@ -44,25 +46,39 @@ h1 {
     background-color: #ffffff;
     cursor: pointer;
     border-radius: 8px;
+    border: none;
+    padding: 0;
+
+    transition: transform 0.2s;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.card:active {
+    transform: scale(0.90) rotate(2deg);
+    transition: transform 0.2s;
 }
 
 .card img {
-    border-radius: 8px;
     width: 100%;
     height: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     display: block;
+    border-radius: 8px;
 }
 
 #result {
     font-size: 1.2rem;
     margin: 20px 0;
-    color: #4eed94;
+    color: white;
     font-weight: bold;
 }
 
 #restart {
-    background-color: #008cff;
+    background-color: #0d45a1;
     color : white;
     border : none;
     padding: 12px 28px;
@@ -75,5 +91,5 @@ h1 {
 }
 
 #restart:hover {
-    background-color: #0066ff;
+    background-color: #1976d2;
 }
