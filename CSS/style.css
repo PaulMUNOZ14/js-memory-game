@@ -1,12 +1,12 @@
 #game-board {
     display: grid;
-    grid-template-columns: repeat(4, 150px);
-    gap: 10px;
+    grid-template-columns: repeat(4, min(15vw, 15vh));
+    gap: min(1vw, 1vh);
 }
 
 .card {
-    width: 150px;
-    height: 150px;
+    width: min(15vw, 15vh);
+    height: min(15vw, 15vh);
     background-color: #cccccc;
     cursor: pointer;
 }
