@@ -2,6 +2,7 @@ const dimension = 150
 const imgStart = Math.floor(Math.random() * 100) + 1
 const images = []
 const timerDisplay = document.getElementById('timerDisplay');
+const movesDisplay = document.getElementById('movesDisplay');
 const result = document.querySelector('#result');
 const restartButton = document.querySelector('#restart');
 
@@ -22,8 +23,8 @@ let cards = [...images, ...images];
 
 function shuffle(array){
     for (let i = array.length - 1; i > 0; i--){
-        let j = Math.floor(Math.random() * i)
-        array[i], array[j] = array[j], array[i]
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
@@ -42,6 +43,7 @@ function handleCardClick(card){
     secondCard = card
     lockBoard = true
     moves++
+    movesDisplay.textContent = `Coups : ${moves}`;
 
     checkMatch()
 }
@@ -113,7 +115,7 @@ function initGame(){
     gameBoard.innerHTML = ''
     result.textContent = ''
 
-    cards.forEach(imgUrl => {
+    cards.forEach((imgUrl, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
 
@@ -121,8 +123,16 @@ function initGame(){
 
         card.setAttribute('role', 'button')
         card.setAttribute('tabindex', '0')
+        card.setAttribute('aria-label', `Carte numéro ${index + 1}, cachée`);
 
         card.addEventListener('click', () => handleCardClick(card));
+
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleCardClick(card);
+            }
+        });
 
         gameBoard.appendChild(card);
     })

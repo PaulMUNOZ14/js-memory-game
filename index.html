@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory</title>
+    <title>Jeu de Memory</title>
+    <meta name="description" content="Un jeu de memory interactif en JavaScript. Trouvez toutes les paires d'images le plus rapidement possible !">
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <script defer src="JS/script.js"></script>
 </head>
 <body>
+    <main id="game-container">
+        <h1>Jeu de Memory</h1>
 
-    <div id="game-board"></div>
-    <div id="timerDisplay">00:00</div>
-    <div id="result"></div>
-    <button id="restart">
-        Recommencer
-    </button>
+        <div id="status-bar">
+            <div id="timerDisplay" aria-label="Temps écoulé">00:00</div>
+            <div id="movesDisplay" aria-label="Nombre de coups">Coups : 0</div>
+        </div>
 
+        <div id="game-board" aria-label="Plateau de jeu"></div>
+        <div id="result" role="status"></div>
+        <button id="restart">
+            Recommencer
+        </button>
+    </main>
 </body>
 </html>
