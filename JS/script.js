@@ -23,9 +23,7 @@ let cards = [...images, ...images];
 function shuffle(array){
     for (let i = array.length - 1; i > 0; i--){
         let j = Math.floor(Math.random() * i)
-        let temp = array[i]
-        array[i] = array[j]
-        array[j] = temp
+        array[i], array[j] = array[j], array[i]
     }
 }
 
@@ -97,17 +95,17 @@ function checkVictory(){
 }
 
 function initGame(){
-    shuffle(cards);
-
-    let firstCard = null
-    let secondCard = null
-    let lockBoard = false
-    let moves = 0
-    let matchedCount = 0
-    let seconds = 0
-    let timerInterval = null
-
     clearInterval(timerInterval)
+
+    firstCard = null
+    secondCard = null
+    lockBoard = false
+    moves = 0
+    matchedCount = 0
+    seconds = 0
+    timerInterval = null
+
+    shuffle(cards);
 
     const gameBoard = document.querySelector('#game-board');
 
