@@ -29,9 +29,11 @@ function shuffle(array){
 }
 
 function handleCardClick(card){
-    if (lockBoard || card === firstCard || card.classList.contains('matched')){
+    if (lockBoard || card === firstCard || card.classList.contains('matched') || card.classList.contains('flipped')){
         return
     }
+
+    card.classList.add('flipped');
 
     card.innerHTML = `<img src="${card.dataset.value}">`
 
@@ -62,6 +64,28 @@ function checkMatch(){
         checkVictory()
     } else {
         setTimeout(() => {
+            const card1 = firstCard;
+            const card2 = secondCard;
+
+            firstCard.classList.remove('flipped')
+            secondCard.classList.remove('flipped')
+            card1.classList.add('shake');
+            card2.classList.add('shake');
+
+            setTimeout(() => {
+                card1.classList.remove('shake');
+                card2.classList.remove('shake');
+
+                card1.classList.add('flip-vertical-left');
+                card2.classList.add('flip-vertical-left');
+
+                setTimeout(() => {
+                    card1.classList.remove('flip-vertical-left');
+                    card2.classList.remove('flip-vertical-left');
+                }, 400);
+                
+            }, 400); 
+
             firstCard.innerHTML = ''
             secondCard.innerHTML = ''
 
@@ -112,6 +136,7 @@ function initGame(){
     const gameBoard = document.querySelector('#game-board');
 
     timerDisplay.textContent = '00:00'
+    movesDisplay.textContent = 'Coups : 0'
     gameBoard.innerHTML = ''
     result.textContent = ''
 

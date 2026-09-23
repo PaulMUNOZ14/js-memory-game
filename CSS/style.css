@@ -1,24 +1,26 @@
 body {
     margin: 0;
-    color: #ffffff;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #0d45a1;
+    background-color: #fe908f;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #game-container {
-    background-color: #1565c0;
+    background-color: #fffa62;
     padding: 30px;
     border-radius: 20px;
     text-align: center;
+    box-shadow: 16px 16px 0px #000000; 
 }
 
 h1 {
     margin-top: 0;
     margin-bottom: 20px;
-    color: white;
+    color: black;
 }
 
 #status-bar {
@@ -27,7 +29,7 @@ h1 {
     margin-bottom: 20px;
     font-size: 1.2rem;
     font-weight: bold;
-    background-color: #0d45a1;
+    background-color: #fecf7f;
     padding: 10px;
     border-radius: 10px;
 }
@@ -43,7 +45,7 @@ h1 {
 .card {
     width: min(15vw, 15vh);
     height: min(15vw, 15vh);
-    background-color: #ffffff;
+    background-color: #fecf7f;
     cursor: pointer;
     border-radius: 8px;
     border: none;
@@ -56,9 +58,20 @@ h1 {
     transform: scale(1.05);
 }
 
-.card:active {
-    transform: scale(0.90) rotate(2deg);
-    transition: transform 0.2s;
+/* animation qui vient de Animista */
+.card.flipped {
+    -webkit-animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+            animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+.card.shake {
+    -webkit-animation: shake-horizontal 0.4s ease-in-out both;
+            animation: shake-horizontal 0.4s ease-in-out both;
+}
+
+.card.flip-vertical-left {
+    -webkit-animation: flip-vertical-left 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+            animation: flip-vertical-left 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 
 .card img {
@@ -68,18 +81,35 @@ h1 {
     object-fit: cover;
     display: block;
     border-radius: 8px;
+    transform: rotateY(180deg);
+    opacity: 0; 
+    transition: opacity 0.15s;
+}
+
+.card.flipped img,
+.card.shake img {
+    opacity: 1;
+}
+
+.card.flipped img {
+    transition-delay: 0.15s;
+}
+
+.card.flip-vertical-left img {
+    opacity: 0;
+    transition: opacity 0.1s;
 }
 
 #result {
     font-size: 1.2rem;
     margin: 20px 0;
-    color: white;
+    color: black;
     font-weight: bold;
 }
 
 #restart {
-    background-color: #0d45a1;
-    color : white;
+    background-color: #fecf7f;
+    color : black;
     border : none;
     padding: 12px 28px;
     font-size: 1rem;
@@ -91,5 +121,23 @@ h1 {
 }
 
 #restart:hover {
-    background-color: #1976d2;
+    background-color: #feb87f;
+}
+
+/* Keygrames animista */
+
+@keyframes flip-vertical-right {
+  0% { transform: rotateY(0); }
+  100% { transform: rotateY(180deg); }
+}
+
+@keyframes flip-vertical-left {
+  0% { transform: rotateY(0); }
+  100% { transform: rotateY(-180deg); }
+}
+
+@keyframes shake-horizontal {
+  0%, 100% { transform: rotateY(180deg) translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: rotateY(180deg) translateX(-3px); }
+  20%, 40%, 60%, 80% { transform: rotateY(180deg) translateX(3px); }
 }
